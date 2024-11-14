@@ -1,7 +1,5 @@
 # prairie_circle_cms
 
-# prairie_circle_cms
-
 A simple CMS project designed to manage categories, events, and users, built with PHP for the backend and soon to be integrated with a React frontend.
 
 ---
