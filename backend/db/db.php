@@ -1,4 +1,8 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
 define('DB_DSN', 'mysql:host=localhost;dbname=serverside;charset=utf8');
 define('DB_USER', 'serveruser');
 define('DB_PASS', 'gorgonzola7!');

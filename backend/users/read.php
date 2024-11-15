@@ -6,14 +6,16 @@ header("Content-Type: application/json; charset=UTF-8");
 
 // Fetch all users
 try {
-    $query = "SELECT id, name, email, role, created_at FROM users";
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+    $offset = isset($_GET['offset']) ? (int)$_GET['offset'] : 0;
+
+    $query = "SELECT * FROM users LIMIT :limit OFFSET :offset";
     $stmt = $pdo->prepare($query);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
+    echo json_encode($stmt->fetchAll());
 
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Return the list of users as JSON
-    echo json_encode($users);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(["error" => "Error fetching users: " . $e->getMessage()]);
