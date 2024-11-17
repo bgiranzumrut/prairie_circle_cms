@@ -1,12 +1,12 @@
-import React from "react"; // Import React and hooks only once
-import { useNavigate } from "react-router-dom"; // Import navigate function
-import "./../styles/Header.css"; // Correct path to CSS file
+import React from "react"; // Import React
+import { useNavigate } from "react-router-dom"; // Import navigation hook
+import "./../styles/Header.css"; // Correct CSS import
 
-function Header({ userName, onLogout }) {
+function Header({ userRole, userName, onLogout }) {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    onLogout(); // Call the onLogout function passed from App
+    onLogout(); // Logout user
   };
 
   return (
@@ -42,7 +42,9 @@ function Header({ userName, onLogout }) {
       <div className="auth-section">
         {userName ? (
           <div className="welcome">
-            <h3>Welcome, {userName}!</h3>
+            <h3>
+              Welcome, {userName}! {userRole}
+            </h3>
             <button onClick={handleSignOut}>Sign Out</button>
           </div>
         ) : (

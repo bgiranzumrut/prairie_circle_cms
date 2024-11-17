@@ -5,7 +5,7 @@ function CategoriesPage() {
 
   useEffect(() => {
     fetch(
-      "http://localhost/prairie_circle_cms/backend/categories/read_categories.php"
+      "http://localhost/prairie_circle_cms/backend/categories/categories.php"
     )
       .then((response) => response.json())
       .then((data) => setCategories(data))

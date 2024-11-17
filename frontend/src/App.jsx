@@ -14,21 +14,28 @@ function App() {
   const [userName, setUserName] = useState(
     sessionStorage.getItem("userName") || null
   );
+  const [userRole, setUserRole] = useState(
+    sessionStorage.getItem("userRole") || null
+  );
 
-  const handleLogin = (name) => {
-    console.log("Logging in with name:", name); // Debug
+  // Handle login
+  const handleLogin = (name, role) => {
     setUserName(name);
+    setUserRole(role);
     sessionStorage.setItem("userName", name);
+    sessionStorage.setItem("userRole", role);
   };
 
+  // Handle logout
   const handleLogout = () => {
     setUserName(null);
+    setUserRole(null);
     sessionStorage.clear();
   };
 
   return (
     <div>
-      <Header userName={userName} onLogout={handleLogout} />
+      <Header userName={userName} userRole={userRole} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/users" element={<UsersPage />} />
@@ -36,6 +43,7 @@ function App() {
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/SignIn" element={<SignIn onLogin={handleLogin} />} />
         <Route path="/SignUp" element={<SignUp />} />
+
         <Route path="/admin" element={<AdminPanel />} />
       </Routes>
       <Footer />

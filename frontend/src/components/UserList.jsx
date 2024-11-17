@@ -1,80 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function UserList() {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [usersPerPage] = useState(5); // Number of users per page
 
   useEffect(() => {
-    fetchUsers();
+    fetch("http://localhost/prairie_circle_cms/backend/users/read.php")
+      .then((response) => response.json())
+      .then((data) => setUsers(data))
+      .catch((err) => console.error("Failed to fetch users", err));
   }, []);
 
-  const fetchUsers = () => {
-    setLoading(true);
-    fetch("http://localhost/prairie_circle_cms/backend/users/read.php")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUsers(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError("Failed to fetch users");
-        setLoading(false);
-      });
-  };
+  // Get current users for the current page
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
-  const nextPage = () => setPage((prev) => prev + 1);
-  const prevPage = () => setPage((prev) => Math.max(prev - 1, 0));
-
-  const deleteUser = (userId) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
-
-    fetch(`http://localhost/prairie_circle_cms/backend/users/delete.php`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: userId }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to delete user");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.message) {
-          alert(data.message);
-          fetchUsers(); // Refresh the user list
-        } else {
-          alert("Deletion failed: " + (data.error || "Unknown error"));
-        }
-      })
-      .catch((err) => {
-        alert("Failed to delete user: " + err.message);
-      });
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
       <h1>Users</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name} ({user.email}){" "}
-            <button onClick={() => deleteUser(user.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {currentUsers.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
+              <td>
+                <button onClick={() => handleEdit(user.id)}>Edit</button>
+                <button onClick={() => handleDelete(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Pagination */}
+      <div>
+        {Array.from(
+          { length: Math.ceil(users.length / usersPerPage) }, // Total pages
+          (_, index) => (
+            <button key={index + 1} onClick={() => paginate(index + 1)}>
+              {index + 1}
+            </button>
+          )
+        )}
+      </div>
     </div>
   );
 }

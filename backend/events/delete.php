@@ -1,8 +1,8 @@
 <?php
 include '../db/db.php';
-include '../authentication/middleware.php';
 
-authenticate(['admin', 'event_coordinator']);
+
+
 
 $data = json_decode(file_get_contents("php://input"), true);
 if (isset($data['id'])) {
