@@ -10,6 +10,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import EventManagement from "./components/EventManagement";
 import CategoryManagement from "./components/CategoryManagement";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [userName, setUserName] = useState(
@@ -36,16 +37,64 @@ function App() {
     <div>
       <Header userName={userName} userRole={userRole} onLogout={handleLogout} />
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<HomePage />} />
-        <Route path="/users" element={<UserList />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/signin" element={<SignIn onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/event-management" element={<EventManagement />} />
-        {userRole === "admin" && (
-          <Route path="/category-management" element={<CategoryManagement />} />
-        )}
+
+        {/* Protected Routes */}
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute
+              allowedRoles={["admin", "event_coordinator", "registered_user"]}
+              userRole={userRole}
+            >
+              <UserList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <ProtectedRoute
+              allowedRoles={["admin", "event_coordinator"]}
+              userRole={userRole}
+            >
+              <EventsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <ProtectedRoute
+              allowedRoles={["admin", "event_coordinator"]}
+              userRole={userRole}
+            >
+              <CategoriesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/event-management"
+          element={
+            <ProtectedRoute
+              allowedRoles={["admin", "event_coordinator"]}
+              userRole={userRole}
+            >
+              <EventManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/category-management"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]} userRole={userRole}>
+              <CategoryManagement />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </div>

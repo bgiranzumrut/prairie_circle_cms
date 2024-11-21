@@ -10,9 +10,10 @@
 }
 
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *"); // Allow requests from any origin
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS"); // Allow specific HTTP methods
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allow specific headers
+header("Access-Control-Max-Age: 86400"); // Cache preflight response for 1 day
 
 
 // Start session if not already active
