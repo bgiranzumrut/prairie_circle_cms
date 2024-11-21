@@ -1,12 +1,12 @@
-import React from "react"; // Import React
-import { useNavigate } from "react-router-dom"; // Import navigation hook
-import "./../styles/Header.css"; // Correct CSS import
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./../styles/Header.css";
 
 function Header({ userRole, userName, onLogout }) {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    onLogout(); // Logout user
+    onLogout();
   };
 
   return (
@@ -36,6 +36,16 @@ function Header({ userRole, userName, onLogout }) {
             <li>
               <a href="/categories">Categories</a>
             </li>
+            {(userRole === "admin" || userRole === "event_coordinator") && (
+              <li>
+                <a href="/event-management">Event Management</a>
+              </li>
+            )}
+            {userRole === "admin" && (
+              <li>
+                <a href="/category-management">Category Management</a>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
@@ -43,14 +53,14 @@ function Header({ userRole, userName, onLogout }) {
         {userName ? (
           <div className="welcome">
             <h3>
-              Welcome, {userName}! {userRole}
+              Welcome, {userName}! ({userRole})
             </h3>
             <button onClick={handleSignOut}>Sign Out</button>
           </div>
         ) : (
           <div>
-            <button onClick={() => navigate("/SignIn")}>Sign In</button>
-            <button onClick={() => navigate("/SignUp")}>Sign Up</button>
+            <button onClick={() => navigate("/signin")}>Sign In</button>
+            <button onClick={() => navigate("/signup")}>Sign Up</button>
           </div>
         )}
       </div>

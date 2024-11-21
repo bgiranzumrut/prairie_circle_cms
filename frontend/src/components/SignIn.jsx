@@ -16,6 +16,7 @@ function SignIn({ onLogin }) {
 
     fetch("http://localhost/prairie_circle_cms/backend/users/login.php", {
       method: "POST",
+
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })

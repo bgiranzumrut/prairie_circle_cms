@@ -11,17 +11,19 @@ function CreateEvent() {
   }); // Form state
   const [categories, setCategories] = useState([]); // Categories list
   const [message, setMessage] = useState(""); // Message for user feedback
+  const [userRole, setUserRole] = useState(""); // User role
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check user role from sessionStorage
-    const userRole = sessionStorage.getItem("userRole");
-    console.log("Retrieved user role from sessionStorage:", userRole);
+    // Fetch user role from sessionStorage
+    const role = sessionStorage.getItem("userRole");
+    setUserRole(role);
+    console.log("Retrieved user role from sessionStorage:", role);
 
-    // Restrict access if role is unauthorized
-    if (userRole !== "admin" && userRole !== "event_coordinator") {
+    // Restrict access to event creation if role is unauthorized
+    if (role !== "admin" && role !== "event_coordinator") {
       setMessage("Access denied. Only authorized users can create events.");
-      console.log("Access denied. Current userRole:", userRole);
+      console.log("Access denied. Current userRole:", role);
       return;
     }
 
@@ -81,67 +83,83 @@ function CreateEvent() {
   return (
     <div>
       <h2>Create New Event</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Event Title:
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Description:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          ></textarea>
-        </label>
-        <label>
-          Category:
-          <select
-            name="category_id"
-            value={formData.category_id}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a Category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Event Date:
-          <input
-            type="date"
-            name="event_date"
-            value={formData.event_date}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Status:
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            required
-          >
-            <option value="upcoming">Upcoming</option>
-            <option value="ongoing">Ongoing</option>
-            <option value="completed">Completed</option>
-          </select>
-        </label>
-        <button type="submit">Create Event</button>
-      </form>
+
+      {/* Conditionally render "Create Category" button for admin */}
+      {userRole === "admin" && (
+        <button
+          onClick={() => navigate("/categories/create")}
+          style={{ marginBottom: "1rem" }}
+        >
+          Create Category
+        </button>
+      )}
+
+      {/* Form for creating events (visible to admin and event coordinator) */}
+      {userRole === "admin" || userRole === "event_coordinator" ? (
+        <form onSubmit={handleSubmit}>
+          <label>
+            Event Title:
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label>
+            Description:
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            ></textarea>
+          </label>
+          <label>
+            Category:
+            <select
+              name="category_id"
+              value={formData.category_id}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a Category</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Event Date:
+            <input
+              type="date"
+              name="event_date"
+              value={formData.event_date}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label>
+            Status:
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              required
+            >
+              <option value="upcoming">Upcoming</option>
+              <option value="ongoing">Ongoing</option>
+              <option value="completed">Completed</option>
+            </select>
+          </label>
+          <button type="submit">Create Event</button>
+        </form>
+      ) : (
+        <p>{message}</p>
+      )}
       {message && <p>{message}</p>}
     </div>
   );
