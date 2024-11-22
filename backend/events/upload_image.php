@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-$uploadsDir = "../uploads/";
+$uploadsDir = "../uploads/"; // Ensure uploads go to the correct directory
 if (!is_dir($uploadsDir)) {
     mkdir($uploadsDir, 0755, true); // Create uploads directory if it doesn't exist
 }

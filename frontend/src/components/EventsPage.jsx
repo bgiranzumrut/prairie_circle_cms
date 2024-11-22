@@ -1,59 +1,83 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
+import "./../styles/EventsPage.css";
 
 function EventsPage() {
-  const [events, setEvents] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [eventsPerPage] = useState(5); // Number of events per page
+  const { id } = useParams(); // Retrieve the event ID from the URL
+  const [event, setEvent] = useState(null); // State to store event details
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
   useEffect(() => {
-    fetch("http://localhost/prairie_circle_cms/backend/events/read.php")
-      .then((response) => response.json())
-      .then((data) => setEvents(data))
-      .catch((err) => console.error("Failed to fetch events", err));
-  }, []);
+    // Fetch event details by ID
+    fetch(
+      `http://localhost/prairie_circle_cms/backend/events/read.php?id=${id}`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch event details"); // Handle non-200 responses
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data && data.length > 0) {
+          setEvent(data[0]); // Set event if data exists (assuming API returns an array)
+        } else {
+          setError("Event not found"); // Handle no matching event
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message || "Failed to fetch event details"); // Handle fetch error
+        setLoading(false);
+      });
+  }, [id]); // Dependency array ensures fetch triggers on ID change
 
-  // Get current events for the current page
-  const indexOfLastEvent = currentPage * eventsPerPage;
-  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
-  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
+  if (loading) {
+    return <p>Loading event details...</p>; // Display while loading
+  }
 
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  if (error) {
+    return <p>Error: {error}</p>; // Display error if any
+  }
+
+  if (!event) {
+    return <p>Event not found.</p>; // Handle missing event
+  }
 
   return (
     <div>
-      <h1>Events</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentEvents.map((event) => (
-            <tr key={event.id}>
-              <td>{event.title}</td>
-              <td>{event.description}</td>
-              <td>{event.event_date}</td>
-              <td>{event.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="event-details">
+        <h1>{event.title}</h1>
+        <div className="event-content">
+          {/* Image on the left */}
+          {event.image_path ? (
+            <img
+              src={`http://localhost/prairie_circle_cms/backend/${event.image_path}`}
+              alt={event.title}
+              className="event-image"
+            />
+          ) : (
+            <div>No Image Available</div>
+          )}
 
-      {/* Pagination */}
-      <div>
-        {Array.from(
-          { length: Math.ceil(events.length / eventsPerPage) }, // Total pages
-          (_, index) => (
-            <button key={index + 1} onClick={() => paginate(index + 1)}>
-              {index + 1}
-            </button>
-          )
-        )}
+          {/* Details on the right */}
+          <div className="event-info">
+            <p>
+              <strong>Date:</strong> {event.event_date}
+            </p>
+            <p>
+              <strong>Status:</strong> {event.status}
+            </p>
+            <p>
+              <strong>Category:</strong> {event.category_name}
+            </p>
+            <p>{event.description}</p>
+            <button className="register-button">Register</button>
+          </div>
+        </div>
       </div>
     </div>
   );

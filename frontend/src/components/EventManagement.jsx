@@ -203,7 +203,7 @@ function EventManagement() {
               <td>
                 {event.image_path && (
                   <img
-                    src={`http://localhost/prairie_circle_cms/backend/uploads/events/1732228137_PrarieCircle.drawio.png`}
+                    src={`http://localhost/prairie_circle_cms/backend/${event.image_path}`}
                     alt={event.title}
                     style={{ width: "100px", height: "auto" }}
                   />

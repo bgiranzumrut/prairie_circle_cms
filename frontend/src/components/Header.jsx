@@ -52,9 +52,7 @@ function Header({ userRole, userName, onLogout }) {
       <div className="auth-section">
         {userName ? (
           <div className="welcome">
-            <h3>
-              Welcome, {userName}! ({userRole})
-            </h3>
+            <h3>Welcome, {userName}!</h3>
             <button onClick={handleSignOut}>Sign Out</button>
           </div>
         ) : (

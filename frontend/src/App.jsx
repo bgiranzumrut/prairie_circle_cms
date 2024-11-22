@@ -54,17 +54,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/events"
-          element={
-            <ProtectedRoute
-              allowedRoles={["admin", "event_coordinator"]}
-              userRole={userRole}
-            >
-              <EventsPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/events/:id" element={<EventsPage />} />
         <Route
           path="/categories"
           element={

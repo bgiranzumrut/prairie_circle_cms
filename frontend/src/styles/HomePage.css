@@ -1,66 +1,163 @@
-/* General Page Styling */
 body {
-  margin: 0;
-  padding: 0;
-  font-family: "Arial", sans-serif;
-  background-color: #f6f1e8; /* Soft Cream */
-  color: #333333; /* Dark Charcoal */
+  margin: 5px 30px;
+  background-color: #f6f1e8; /* Matches the welcome section */
 }
 
-.home-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  width: 100vw;
-}
-
-.header h1 {
-  margin: 0;
-  font-size: 2rem;
-}
-
-.header p {
-  margin: 10px 0 0;
-  font-size: 1.2rem;
-}
-
-/* Main Content Styling */
-.content {
-  flex: 1;
-  padding: 20px;
-  text-align: center;
-}
-
-.home-logo {
-  width: 150px;
-  margin: 20px auto;
-  display: block;
-}
-
+/* Welcome Section */
 .welcome {
-  margin-top: 20px;
+  text-align: center; /* Centers all content */
+  margin: 20px auto; /*s Adds spacing around the section */
+  padding: 0px; /* Creates breathing room */
+  margin: 0.1px;
 }
 
 .welcome h2 {
-  color: #3b5e56; /* Deep Green */
+  font-size: 2.5rem; /* Makes the title stand out */
+  color: #3b5e56; /* Deep Green consistent with header */
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.features {
-  margin-top: 30px;
-  text-align: left;
-  max-width: 600px;
-  margin: 30px auto;
+.welcome p {
+  font-size: 1.2rem; /* Comfortable reading size */
+  color: #555; /* Muted grey for a softer look */
+  line-height: 1.8; /* Improved readability */
+  margin: 0 auto; /* Centers text within the section */
+  max-width: 600px; /* Restricts line length for better readability */
 }
 
-.features h2 {
-  color: #4a6a63; /* Muted Green */
+@media (max-width: 768px) {
+  .welcome {
+    padding: 20px;
+    margin: 10px auto;
+  }
+
+  .welcome h2 {
+    font-size: 2rem;
+  }
+
+  .welcome p {
+    font-size: 1rem;
+  }
 }
 
-.features ul {
-  list-style-type: disc;
-  padding-left: 20px;
+/* Filter and Sort Events Section */
+.filter-sort-events {
+  display: flex;
+  justify-content: center; /* Center aligns the filters */
+  margin: 20px auto; /* Adds spacing above and below */
+  background-color: #f6f1e8; /* Matches the welcome section */
+  padding: 10px;
+  width: 100;
 }
 
-.features li {
-  margin: 5px 0;
+/* Filters Container */
+.filters {
+  display: flex;
+  flex-wrap: wrap; /* Allows elements to wrap on smaller screens */
+  gap: 15px 50px; /* Space between input fields */
+  justify-content: center; /* Ensures child elements are centered */
+}
+
+/* Filter Input and Select */
+.filter-input,
+.filter-select {
+  padding: 12px 15px;
+  font-size: 1rem;
+  color: #333; /* Matches text color */
+  border: 1px solid #ddd;
+  border-radius: 8px; /* Rounded corners */
+  background-color: #fff; /* White background for clarity */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Light shadow */
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  max-width: 250px; /* Sets consistent width for inputs */
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #3b5e56; /* Matches project theme */
+  box-shadow: 0 0 5px #3b5e56;
+}
+
+@media (max-width: 768px) {
+  .filter-input,
+  .filter-select {
+    max-width: 100%; /* Expands to full width on smaller screens */
+  }
+
+  .filters {
+    gap: 10px; /* Reduced gap for smaller screens */
+  }
+}
+
+/* Event List Grid */
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.event-item {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  max-width: 400px;
+}
+
+.event-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.event-image {
+  width: 100%;
+  height: 200px;
+
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.status-tag {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #fff;
+  display: inline-block;
+}
+
+.status-tag.upcoming {
+  background: #4caf50; /* Green */
+}
+
+.status-tag.ongoing {
+  background: #ffc107; /* Yellow */
+}
+
+.status-tag.completed {
+  background: #f44336; /* Red */
+}
+
+/* Event Buttons */
+.event-buttons button {
+  padding: 10px 15px;
+  margin: 5px;
+  background: #4a6a63;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.event-buttons button:hover {
+  background: #3b5e56;
 }
