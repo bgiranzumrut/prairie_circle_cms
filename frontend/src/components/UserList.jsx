@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -35,7 +36,9 @@ function UserList() {
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.role}</td>
+              <td>
+                <Link to={`/profile/${user.id}`}>See Profile</Link>
+              </td>
             </tr>
           ))}
         </tbody>

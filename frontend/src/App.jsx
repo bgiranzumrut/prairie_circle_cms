@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -11,34 +11,25 @@ import SignUp from "./components/SignUp";
 import EventManagement from "./components/EventManagement";
 import CategoryManagement from "./components/CategoryManagement";
 import ProtectedRoute from "./components/ProtectedRoute";
+import UserProfile from "./components/UserProfile";
+import EventRegistration from "./components/EventRegistration";
+import MyProfile from "./components/MyProfile";
+import { UserProvider, UserContext } from "./context/UserContext"; // Import UserProvider and UserContext
 
 function App() {
-  const [userName, setUserName] = useState(
-    sessionStorage.getItem("userName") || null
-  );
-  const [userRole, setUserRole] = useState(
-    sessionStorage.getItem("userRole") || null
-  );
-
-  const handleLogin = (name, role) => {
-    setUserName(name);
-    setUserRole(role);
-    sessionStorage.setItem("userName", name);
-    sessionStorage.setItem("userRole", role);
-  };
-
-  const handleLogout = () => {
-    setUserName(null);
-    setUserRole(null);
-    sessionStorage.clear();
-  };
+  const { user, handleLogin, handleLogout } = useContext(UserContext); // Access context
 
   return (
     <div>
-      <Header userName={userName} userRole={userRole} onLogout={handleLogout} />
+      {/* Pass user state and logout handler to Header */}
+      <Header userName={user.name} onLogout={handleLogout} />
+
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={<HomePage userName={user.name} userId={user.id} />}
+        />
         <Route path="/signin" element={<SignIn onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
 
@@ -48,7 +39,7 @@ function App() {
           element={
             <ProtectedRoute
               allowedRoles={["admin", "event_coordinator", "registered_user"]}
-              userRole={userRole}
+              userRole={user.role}
             >
               <UserList />
             </ProtectedRoute>
@@ -60,7 +51,7 @@ function App() {
           element={
             <ProtectedRoute
               allowedRoles={["admin", "event_coordinator"]}
-              userRole={userRole}
+              userRole={user.role}
             >
               <CategoriesPage />
             </ProtectedRoute>
@@ -71,7 +62,7 @@ function App() {
           element={
             <ProtectedRoute
               allowedRoles={["admin", "event_coordinator"]}
-              userRole={userRole}
+              userRole={user.role}
             >
               <EventManagement />
             </ProtectedRoute>
@@ -80,15 +71,29 @@ function App() {
         <Route
           path="/category-management"
           element={
-            <ProtectedRoute allowedRoles={["admin"]} userRole={userRole}>
+            <ProtectedRoute allowedRoles={["admin"]} userRole={user.role}>
               <CategoryManagement />
             </ProtectedRoute>
           }
         />
+        <Route path="/profile/:userId" element={<UserProfile />} />
+        <Route
+          path="/register/:id"
+          element={<EventRegistration userId={user.id} />}
+        />
+        <Route path="/profile" element={<MyProfile />} />
       </Routes>
+
       <Footer />
     </div>
   );
 }
 
-export default App;
+// Wrap App with UserProvider
+export default function AppWithProvider() {
+  return (
+    <UserProvider>
+      <App />
+    </UserProvider>
+  );
+}

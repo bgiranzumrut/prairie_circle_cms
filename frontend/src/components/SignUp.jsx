@@ -13,22 +13,29 @@ function SignUp() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("http://localhost/prairie_circle_cms/backend/users/register.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message) {
-          setMessage(data.message); // Display welcome message
-        } else if (data.error) {
-          setMessage(data.error);
+    try {
+      const response = await fetch(
+        "http://localhost/prairie_circle_cms/backend/users/register.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         }
-      })
-      .catch(() => setMessage("An error occurred."));
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage(data.message); // Display success message
+      } else {
+        setMessage(data.error || "An error occurred. Please try again.");
+      }
+    } catch (error) {
+      console.error("Sign-up error:", error);
+      setMessage("An error occurred. Please try again.");
+    }
   };
 
   return (

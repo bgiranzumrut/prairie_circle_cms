@@ -3,10 +3,12 @@ import { Navigate } from "react-router-dom";
 
 function ProtectedRoute({ children, allowedRoles, userRole }) {
   if (!userRole) {
-    return <Navigate to="/signin" replace />; // Redirect to login if not logged in
+    // Redirect to SignIn if not logged in
+    return <Navigate to="/signin" replace />;
   }
   if (!allowedRoles.includes(userRole)) {
-    return <Navigate to="/" replace />; // Redirect to home if unauthorized
+    // Redirect to Home if unauthorized
+    return <Navigate to="/" replace />;
   }
   return children;
 }

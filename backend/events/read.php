@@ -1,23 +1,27 @@
 <?php
 include '../db/db.php';
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+// CORS Headers
+header("Access-Control-Allow-Origin: http://localhost:5173"); // Frontend origin
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
+header("Access-Control-Allow-Credentials: true"); // Allow credentials (cookies/session sharing)
 
+// Handle preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit();
 }
 
-// Get query parameters
+// Validate and sanitize inputs
+$event_id = $_GET['event_id'] ?? null; // Fetch by specific event_id if provided
 $sortCriteria = $_GET['sort'] ?? 'event_date'; // Default sort by event_date
 $sortOrder = strtoupper($_GET['order'] ?? 'ASC'); // Default to ascending order
 $titleFilter = $_GET['title'] ?? ''; // Filter by title
 $statusFilter = $_GET['status'] ?? ''; // Filter by status
 $categoryFilter = $_GET['category'] ?? ''; // Filter by category
 
-// Validate sort criteria
+// Validate sorting options
 $allowedSorts = ['event_date', 'title', 'status', 'category_name'];
 $allowedOrders = ['ASC', 'DESC'];
 if (!in_array($sortCriteria, $allowedSorts)) {
@@ -28,23 +32,39 @@ if (!in_array($sortOrder, $allowedOrders)) {
 }
 
 try {
-    // Build the query with dynamic filters
+    // Check if a specific event is being fetched
+    if (!empty($event_id) && is_numeric($event_id)) {
+        $query = "SELECT events.*, categories.name AS category_name 
+                  FROM events 
+                  LEFT JOIN categories ON events.category_id = categories.id 
+                  WHERE events.id = :event_id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $event = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($event) {
+            echo json_encode($event); // Return the specific event
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Event not found.']);
+        }
+        exit();
+    }
+
+    // Build the query for fetching all events with dynamic filters
     $query = "SELECT events.*, categories.name AS category_name 
               FROM events 
               LEFT JOIN categories ON events.category_id = categories.id 
               WHERE 1=1"; // Placeholder for dynamic conditions
 
-    // Apply title filter
+    // Apply filters
     if (!empty($titleFilter)) {
         $query .= " AND events.title LIKE :title";
     }
-
-    // Apply status filter
     if (!empty($statusFilter)) {
         $query .= " AND events.status = :status";
     }
-
-    // Apply category filter
     if (!empty($categoryFilter)) {
         $query .= " AND events.category_id = :category";
     }
@@ -69,7 +89,7 @@ try {
     $stmt->execute();
     $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo json_encode($events);
+    echo json_encode($events); // Return all filtered and sorted events
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);

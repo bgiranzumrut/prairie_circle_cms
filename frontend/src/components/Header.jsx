@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 import "./../styles/Header.css";
 
-function Header({ userRole, userName, onLogout }) {
+function Header() {
   const navigate = useNavigate();
+  const { user, handleLogout } = useContext(UserContext); // Access user role and logout functionality from context
 
   const handleSignOut = () => {
-    onLogout();
+    handleLogout();
+    navigate("/"); // Redirect to the home page after logout
   };
 
   return (
@@ -30,18 +33,17 @@ function Header({ userRole, userName, onLogout }) {
             <li>
               <a href="/users">Users</a>
             </li>
-            <li>
-              <a href="/events">Events</a>
-            </li>
-            <li>
-              <a href="/categories">Categories</a>
-            </li>
-            {(userRole === "admin" || userRole === "event_coordinator") && (
+            {user.name && ( // Show "My Profile" link for logged-in users
+              <li>
+                <a href="/profile">My Profile</a>
+              </li>
+            )}
+            {(user.role === "admin" || user.role === "event_coordinator") && (
               <li>
                 <a href="/event-management">Event Management</a>
               </li>
             )}
-            {userRole === "admin" && (
+            {user.role === "admin" && (
               <li>
                 <a href="/category-management">Category Management</a>
               </li>
@@ -50,10 +52,16 @@ function Header({ userRole, userName, onLogout }) {
         </nav>
       </div>
       <div className="auth-section">
-        {userName ? (
+        {user.name ? (
           <div className="welcome">
-            <h3>Welcome, {userName}!</h3>
-            <button onClick={handleSignOut}>Sign Out</button>
+            <h3>Welcome, {user.name}! </h3>
+            <button
+              onClick={handleSignOut}
+              className="signout-button"
+              aria-label="Sign Out"
+            >
+              Sign Out
+            </button>
           </div>
         ) : (
           <div>

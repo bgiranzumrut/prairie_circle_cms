@@ -1,9 +1,22 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:5173"); // Frontend origin
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Origin: http://localhost:5173"); // Allow requests from your frontend
+header("Access-Control-Allow-Methods: POST, OPTIONS"); // Allow POST and OPTIONS methods
+header("Access-Control-Allow-Headers: Content-Type, Authorization"); // Allow headers
+header("Access-Control-Allow-Credentials: true"); // Allow cookies/sessions
 
-// Start session
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    // Handle preflight request
+    http_response_code(204); // No Content
+    exit();
+}
+
+session_start();
+
+// Clear any existing session data
+session_unset();
+session_destroy();
+
+// Start a new session
 session_start();
 
 include '../db/db.php';
@@ -11,8 +24,7 @@ include '../db/db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Validate email and password
-    if (!isset($data['email'], $data['password']) || empty($data['email']) || empty($data['password'])) {
+    if (!isset($data['email'], $data['password'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Email and password are required.']);
         exit();
@@ -23,42 +35,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "SELECT * FROM users WHERE email = :email";
         $stmt = $pdo->prepare($query);
         $stmt->execute(['email' => $data['email']]);
-        $user = $stmt->fetch();
-
-        // Debugging: Log fetched user data
-        error_log("Fetched user data: " . print_r($user, true));
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($data['password'], $user['password'])) {
+            // Regenerate session ID for security
+            session_regenerate_id(true);
+
+            // Set session variables
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
-        
-            // Debug: Print the user data being sent
-            error_log("Login success: " . json_encode([
-                'message' => 'Login successful!',
-                'name' => $user['name'],
-                'role' => $user['role'],
-                'id' => $user['id'],
-            ]));
-        
+            
             http_response_code(200);
             echo json_encode([
                 'message' => 'Login successful!',
                 'name' => $user['name'],
-                'role' => $user['role'],
                 'id' => $user['id'],
+                'role' => $user['role'],
             ]);
         } else {
-            error_log("Login failed for email: " . $data['email']);
-            http_response_code(401);
+            http_response_code(401); // Unauthorized
             echo json_encode(['error' => 'Invalid email or password.']);
         }
-        
     } catch (PDOException $e) {
-        // Debugging: Log database error
-        error_log("Database error: " . $e->getMessage());
-        http_response_code(500);
-        echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+        http_response_code(500); // Internal Server Error
+        echo json_encode(['error' => 'An error occurred while processing your request.']);
     }
+} else {
+    http_response_code(405); // Method Not Allowed
+    echo json_encode(['error' => 'Invalid request method.']);
 }
 ?>
