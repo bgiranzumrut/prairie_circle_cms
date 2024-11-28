@@ -1,0 +1,111 @@
+/* General Container Styling */
+.user-profile {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  font-family: "Arial", sans-serif;
+  color: #333; /* Standard text color */
+}
+
+/* Header Section */
+.user-profile h2 {
+  font-size: 2.4rem;
+  color: #3b5e56; /* Match the green theme */
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.user-profile p {
+  text-align: center;
+  font-size: 1rem;
+  color: #555; /* Muted gray for description */
+  margin-bottom: 20px;
+}
+
+/* User Info Section */
+.user-info {
+  background-color: #f8f9fa; /* Light gray background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.user-info p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.user-info strong {
+  color: #3b5e56; /* Green for labels */
+}
+
+/* Events Section */
+.user-profile h3 {
+  font-size: 1.8rem;
+  color: #3b5e56;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd; /* Subtle underline for separation */
+  padding-bottom: 10px;
+}
+
+/* Event List */
+.user-profile ul {
+  list-style: none;
+  padding: 0;
+}
+
+.user-profile li {
+  background-color: #ffffff;
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add depth */
+}
+
+.user-profile li h4 {
+  font-size: 1.5rem;
+  color: #3b5e56;
+  margin-bottom: 10px;
+}
+
+.user-profile li p {
+  font-size: 1rem;
+  color: #555;
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.user-profile li strong {
+  color: #3b5e56;
+  font-weight: bold;
+}
+
+.user-profile li i {
+  margin-right: 5px; /* Space between icons and text */
+  color: #4a6a63; /* Muted green */
+}
+
+/* Button Styling */
+.user-profile button {
+  display: inline-block;
+  background-color: #3b5e56;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.user-profile button:hover {
+  background-color: #4a6a63; /* Slightly lighter green */
+  transform: scale(1.05); /* Hover effect */
+}

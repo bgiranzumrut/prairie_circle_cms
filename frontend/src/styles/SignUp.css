@@ -1,0 +1,75 @@
+/* Container Styling */
+.sign-up-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+  color: #333;
+  text-align: center;
+}
+
+/* Title Styling */
+.sign-up-container h2 {
+  font-size: 1.8rem;
+  color: #3b5e56;
+  margin-bottom: 20px;
+}
+
+/* Form Styling */
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sign-up-form label {
+  text-align: left;
+  font-size: 0.9rem;
+  color: #3b5e56;
+}
+
+.sign-up-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.sign-up-form input:focus {
+  border-color: #3b5e56;
+  outline: none;
+  box-shadow: 0 0 5px rgba(59, 94, 86, 0.3);
+}
+
+/* Button Styling */
+.sign-up-form button {
+  background-color: #3b5e56;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.sign-up-form button:hover {
+  background-color: #4a6a63;
+}
+
+.sign-up-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Feedback Message Styling */
+.feedback-message {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: 10px;
+  text-align: center;
+}

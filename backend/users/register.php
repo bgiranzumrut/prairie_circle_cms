@@ -14,21 +14,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Decode JSON request body
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Validate input
+    // Validate required fields
     if (!isset($data['name'], $data['email'], $data['password']) || 
-        empty($data['name']) || 
-        empty($data['email']) || 
-        empty($data['password'])) {
+        empty(trim($data['name'])) || 
+        empty(trim($data['email'])) || 
+        empty(trim($data['password']))) {
         http_response_code(400); // Bad Request
         echo json_encode(['error' => 'Name, email, and password are required.']);
         exit();
     }
 
+    // Sanitize inputs
+    $name = htmlspecialchars(strip_tags(trim($data['name'])));
+    $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
+    $password = trim($data['password']);
+
+    if (!$email) {
+        http_response_code(400); // Bad Request
+        echo json_encode(['error' => 'Invalid email address.']);
+        exit();
+    }
+
     try {
         // Hash the password
-        $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         // Default user role
         $role = 'registered_user';
@@ -37,22 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'name' => $name,
+            'email' => $email,
             'password' => $hashedPassword,
             'role' => $role,
         ]);
 
         // Return success message
         http_response_code(201); // Created
-        echo json_encode(['message' => 'Welcome, ' . $data['name'] . '!']);
+        echo json_encode(['message' => 'Welcome, ' . $name . '!']);
     } catch (PDOException $e) {
         if ($e->getCode() == 23000) { // Duplicate email
             http_response_code(409); // Conflict
             echo json_encode(['error' => 'Email already in use.']);
         } else {
             http_response_code(500); // Internal Server Error
-            echo json_encode(['error' => 'An error occurred. Please try again.']);
+            echo json_encode(['error' => 'An error occurred. Please try again later.']);
         }
     }
 } else {

@@ -1,103 +1,146 @@
+/* General Header Styling */
 .header {
-  background-color: #3b5e56; /* Deep Green */
-  color: #fff;
+  background-color: #3b5e56; /* Deep Green consistent with project */
+  color: #fff; /* White text for contrast */
   display: flex;
-  justify-content: space-between; /* Space between logo, nav, and auth sections */
+  justify-content: space-between; /* Space out logo, nav, and auth sections */
   align-items: center;
-  padding: 20px 20px;
+  padding: 15px 20px; /* Adds breathing space */
   flex-wrap: wrap; /* Allows wrapping for responsiveness */
   border-radius: 10px;
 }
 
+/* Logo Section */
 .logo img {
-  width: 100px;
+  width: 100px; /* Slightly larger logo */
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
 }
 
+/* Title Section */
 .name h1 {
-  margin: 20px;
-  font-size: 1.8rem;
+  margin: 0;
+  font-size: 2.4rem; /* Larger and more prominent */
   font-weight: bold;
-  display: flex;
-  align-items: center;
+  color: #f6f1e8; /* Lighter green for contrast */
 }
 
-.nav {
-  flex: 1; /* Ensures the navigation takes up equal space */
-  text-align: center;
-}
-
+/* Navigation Links */
 .nav-list {
   list-style: none;
   display: flex;
-  justify-content: center;
-  gap: 1.5rem; /* Space between links */
+  gap: 2.2rem; /* Larger spacing between links */
   padding: 0;
   margin: 0;
+  flex: 1; /* Ensures even spacing */
+  justify-content: flex-end; /* Aligns links to the right */
 }
 
 .nav-list a {
   color: #fff;
   text-decoration: none;
+  font-size: 1.2rem; /* Increased font size */
   font-weight: bold;
-  padding: 5px 10px;
+  padding: 8px 12px; /* Adds padding for better click area */
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  font-size: x-large;
 }
 
 .nav-list a:hover {
-  background-color: #4a6a63; /* Slightly lighter green for hover effect */
-  text-decoration: none;
+  background-color: #4a6a63; /* Lighter green hover effect */
 }
 
+/* Auth Section */
 .auth-section {
   text-align: right;
+  margin-left: 20px;
 }
 
-.auth-section button {
-  background-color: #ffffff;
+.auth-section .welcome h3 {
+  font-size: 1.5rem; /* Increased size for readability */
+  margin: 0.5rem;
+  color: #f6f1e8; /* Lighter green for better contrast */
+}
+
+.auth-section .signout-button {
+  background-color: #fff;
   color: #3b5e56;
   border: none;
-  padding: 8px 12px;
+  padding: 10px 15px; /* Larger button */
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 1.2rem; /* Larger font size */
   font-weight: bold;
   cursor: pointer;
-  margin: 10px;
+  margin-top: 5px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.auth-section .signout-button:hover {
+  background-color: #4a6a63; /* Matches hover style */
+  color: #fff;
+}
+
+/* Sign In/Sign Up Buttons */
+.auth-section button {
+  background-color: #ffffff; /* White background */
+  color: #3b5e56; /* Deep green for text */
+  border: 2px solid #3b5e56; /* Solid border to define the buttons */
+  padding: 12px 25px; /* Larger padding for a better look */
+  border-radius: 10px; /* Smooth rounded corners */
+  font-size: 1.2rem; /* Larger font for readability */
+  font-weight: bold; /* Emphasized text */
+  cursor: pointer;
+  margin: 5px 10px; /* Spacing between buttons */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover Effect for Buttons */
 .auth-section button:hover {
-  background-color: #4a6a63;
-  color: #ffffff;
+  background-color: #4a6a63; /* Light green hover background */
+  color: #ffffff; /* White text on hover */
+  transform: scale(1.05); /* Slight scaling for interactivity */
+}
+
+/* Focus Effect */
+.auth-section button:focus {
+  outline: 3px solid #4a6a63; /* Green outline for accessibility */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .auth-section button {
+    width: 100%; /* Full-width buttons on smaller screens */
+    margin: 10px 0; /* Spacing between stacked buttons */
+  }
 }
 
 /* Responsive Styling */
 @media (max-width: 768px) {
   .header {
-    flex-direction: column; /* Stack items vertically on smaller screens */
+    flex-direction: column; /* Stack items vertically */
     text-align: center;
   }
 
-  .name h1 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-
   .nav-list {
-    flex-direction: column; /* Stack links vertically on smaller screens */
-    gap: 10px;
+    justify-content: center; /* Center navigation on smaller screens */
+    flex-wrap: wrap;
+    gap: 15px; /* Adjust gap for smaller screens */
   }
 
   .auth-section {
     margin-top: 10px;
   }
 
-  .auth-section button {
-    width: 100%;
-    margin: 5px 0;
+  .auth-section .signout-button {
+    width: 100%; /* Full-width button for smaller screens */
+  }
+
+  .name h1 {
+    font-size: 1.8rem; /* Slightly smaller for smaller screens */
+  }
+
+  .nav-list a {
+    font-size: 1.1rem; /* Adjusted for smaller screens */
   }
 }

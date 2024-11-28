@@ -1,0 +1,87 @@
+/* Container for the User List */
+.user-list {
+  max-width: 1200px;
+  margin: 30px auto; /* Centers the table */
+  padding: 20px;
+  background-color: #ffffff; /* White background for contrast */
+  border: 1px solid #e0e0e0; /* Subtle border for structure */
+  border-radius: 10px; /* Rounded corners for smooth design */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds depth */
+}
+
+/* Table Styling */
+.user-list table {
+  width: 100%; /* Full width of the container */
+  border-collapse: collapse; /* Removes gaps between cells */
+  font-size: 1.1rem; /* Slightly larger font for readability */
+  margin-top: 20px;
+}
+
+/* Table Header Styling */
+.user-list th {
+  background-color: #4a6a63; /* Muted green for header background */
+  color: #ffffff; /* White text for contrast */
+  text-align: left; /* Aligns header text to the left */
+  padding: 12px 15px; /* Adds padding for a consistent look */
+  font-weight: bold; /* Makes the headers stand out */
+  border-bottom: 2px solid #ddd; /* Subtle border for separation */
+}
+
+/* Table Data Alignment */
+.user-list td {
+  padding: 12px 15px; /* Matches header padding for consistency */
+  text-align: left; /* Aligns table data to the left */
+  border-bottom: 1px solid #e0e0e0; /* Subtle row separation */
+}
+
+/* Highlight Alternate Rows */
+.user-list tr:nth-child(even) {
+  background-color: #f9f9f9; /* Light gray for alternate rows */
+}
+
+/* Hover Effect for Rows */
+.user-list tr:hover {
+  background-color: #f1f1f1; /* Light highlight on hover */
+  cursor: pointer;
+}
+
+/* Link Styling */
+.user-list a {
+  color: #3b5e56; /* Matches the project’s green */
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.user-list a:hover {
+  color: #4a6a63; /* Slightly darker green on hover */
+  text-decoration: underline; /* Adds emphasis */
+}
+
+/* Title Styling */
+.user-list h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #3b5e56; /* Consistent deep green */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-list {
+    padding: 15px;
+  }
+
+  .user-list table {
+    font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .user-list th,
+  .user-list td {
+    padding: 8px;
+  }
+
+  .user-list h1 {
+    font-size: 1.5rem;
+  }
+}

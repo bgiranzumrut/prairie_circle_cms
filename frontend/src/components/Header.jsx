@@ -9,6 +9,7 @@ function Header() {
 
   const handleSignOut = () => {
     handleLogout();
+    sessionStorage.removeItem("user"); // Clear session storage
     navigate("/"); // Redirect to the home page after logout
   };
 
@@ -22,7 +23,7 @@ function Header() {
         />
       </div>
       <div className="name">
-        <h1>Prairie Circle CMS 🌟</h1>
+        <h1>Prairie Circle </h1>
       </div>
       <div className="nav">
         <nav>
@@ -30,20 +31,23 @@ function Header() {
             <li>
               <a href="/">Home</a>
             </li>
-            <li>
-              <a href="/users">Users</a>
-            </li>
-            {user.name && ( // Show "My Profile" link for logged-in users
+            {/* Only show "Users" link if logged in */}
+            {user?.role && (
+              <li>
+                <a href="/users">Users</a>
+              </li>
+            )}
+            {user?.name && ( // Show "My Profile" link for logged-in users
               <li>
                 <a href="/profile">My Profile</a>
               </li>
             )}
-            {(user.role === "admin" || user.role === "event_coordinator") && (
+            {(user?.role === "admin" || user?.role === "event_coordinator") && (
               <li>
                 <a href="/event-management">Event Management</a>
               </li>
             )}
-            {user.role === "admin" && (
+            {user?.role === "admin" && (
               <li>
                 <a href="/category-management">Category Management</a>
               </li>
@@ -52,7 +56,7 @@ function Header() {
         </nav>
       </div>
       <div className="auth-section">
-        {user.name ? (
+        {user?.name ? (
           <div className="welcome">
             <h3>Welcome, {user.name}! </h3>
             <button
@@ -65,8 +69,8 @@ function Header() {
           </div>
         ) : (
           <div>
-            <button onClick={() => navigate("/signin")}>Sign In</button>
-            <button onClick={() => navigate("/signup")}>Sign Up</button>
+            <button onClick={() => navigate("/SignIn")}>Sign In</button>
+            <button onClick={() => navigate("/SignUp")}>Sign Up</button>
           </div>
         )}
       </div>

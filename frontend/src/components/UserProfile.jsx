@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import "./../styles/UserProfile.css";
 
 function UserProfile() {
   const { userId } = useParams(); // Get userId from URL parameters
@@ -35,8 +36,23 @@ function UserProfile() {
   }, [userId]);
 
   return (
-    <div>
-      <h2>User Profile</h2>
+    <div className="user-profile">
+      <h2>Profile of {userName}</h2>
+      <p>
+        Learn more about {userName}’s activities, events, and contributions.
+      </p>
+
+      {/* User Info Section */}
+      <div className="user-info">
+        <p>
+          <strong>Name:</strong> {userName}
+        </p>
+        <p>
+          <strong>Email:</strong> alice@example.com
+        </p>
+      </div>
+
+      {/* Events Section */}
       <h3>Events Joined by {userName}</h3>
       {loading ? (
         <p>Loading events...</p>
@@ -48,19 +64,29 @@ function UserProfile() {
             <li key={event.id}>
               <h4>{event.title}</h4>
               <p>
-                <strong>Date:</strong> {event.event_date}
+                <strong>
+                  <i className="fas fa-calendar-alt"></i> Date:
+                </strong>{" "}
+                {event.event_date}
               </p>
               <p>
-                <strong>Description:</strong> {event.description}
+                <strong>
+                  <i className="fas fa-info-circle"></i> Description:
+                </strong>{" "}
+                {event.description}
               </p>
               <p>
-                <strong>Category:</strong> {event.category_name}
+                <strong>
+                  <i className="fas fa-tag"></i> Category:
+                </strong>{" "}
+                {event.category_name}
               </p>
+              <button>See Event</button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No events joined yet.</p>
+        <p className="no-events">No events joined yet.</p>
       )}
     </div>
   );

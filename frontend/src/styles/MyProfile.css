@@ -1,0 +1,155 @@
+/* General Container Styling */
+.my-profile {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+  color: #333;
+}
+
+/* Header Section */
+.my-profile h2 {
+  font-size: 2.2rem;
+  color: #3b5e56; /* Consistent green */
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* User Info Section */
+.my-profile .user-info {
+  background-color: #f8f9fa; /* Light gray background */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.my-profile .user-info p {
+  font-size: 1.2rem;
+  margin: 8px 0;
+  color: #555; /* Muted gray */
+}
+
+.my-profile .user-info strong {
+  color: #3b5e56; /* Highlight important details */
+}
+
+/* Registered Events Section */
+.my-profile h3 {
+  font-size: 1.8rem;
+  color: #3b5e56;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd; /* Subtle underline for separation */
+  padding-bottom: 10px;
+}
+
+/* Event List */
+.my-profile ul {
+  list-style: none; /* Remove default bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.my-profile li {
+  background-color: #ffffff;
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px; /* Space between event cards */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.my-profile li h4 {
+  font-size: 1.5rem;
+  color: #3b5e56; /* Green for titles */
+  margin-bottom: 10px;
+}
+
+.my-profile li p {
+  font-size: 1rem;
+  color: #555; /* Muted gray for text */
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+/* Button Styling */
+.cancel-button {
+  background-color: #ffffff; /* White base */
+  color: #d9534f; /* Red text for cancel */
+  border: 2px solid #d9534f; /* Red border */
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: #d9534f; /* Red background on hover */
+  color: #ffffff; /* White text on hover */
+  transform: scale(1.05); /* Slightly enlarges button */
+}
+
+.cancel-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #d9534f; /* Red glow on focus */
+}
+
+/* Empty State and Error Messages */
+.my-profile .error-message,
+.my-profile .no-events {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.my-profile .error-message {
+  color: #d9534f; /* Red for error */
+}
+
+.my-profile .no-events {
+  color: #555; /* Neutral gray for no events */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .my-profile {
+    padding: 15px;
+  }
+
+  .my-profile h2 {
+    font-size: 1.8rem;
+  }
+
+  .my-profile h3 {
+    font-size: 1.5rem;
+  }
+
+  .my-profile .user-info p {
+    font-size: 1rem;
+  }
+
+  .my-profile li {
+    padding: 15px;
+  }
+
+  .my-profile li h4 {
+    font-size: 1.3rem;
+  }
+
+  .my-profile li p {
+    font-size: 0.9rem;
+  }
+
+  .cancel-button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}

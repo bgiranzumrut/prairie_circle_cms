@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import "./../styles/UserList.css";
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -21,14 +22,14 @@ function UserList() {
   }, []);
 
   return (
-    <div>
-      <h1>Users</h1>
+    <div className="user-list">
+      <h1>Our Community Members</h1>
       <table>
         <thead>
           <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Role</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

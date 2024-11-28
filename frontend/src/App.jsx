@@ -19,39 +19,41 @@ import { UserProvider, UserContext } from "./context/UserContext"; // Import Use
 function App() {
   const { user, handleLogin, handleLogout } = useContext(UserContext); // Access context
 
+  const isAuthenticated = !!user?.role; // Ensure user authentication status is accurate
+
   return (
     <div>
-      {/* Pass user state and logout handler to Header */}
-      <Header userName={user.name} onLogout={handleLogout} />
+      <Header userName={user?.name} onLogout={handleLogout} />
 
       <Routes>
         {/* Public Routes */}
         <Route
           path="/"
-          element={<HomePage userName={user.name} userId={user.id} />}
+          element={<HomePage userName={user?.name} userId={user?.id} />}
         />
         <Route path="/signin" element={<SignIn onLogin={handleLogin} />} />
         <Route path="/signup" element={<SignUp />} />
-
+        <Route path="/events/:id" element={<EventsPage />} />
         {/* Protected Routes */}
         <Route
           path="/users"
           element={
             <ProtectedRoute
+              isAuthenticated={isAuthenticated}
               allowedRoles={["admin", "event_coordinator", "registered_user"]}
-              userRole={user.role}
+              userRole={user?.role}
             >
               <UserList />
             </ProtectedRoute>
           }
         />
-        <Route path="/events/:id" element={<EventsPage />} />
         <Route
           path="/categories"
           element={
             <ProtectedRoute
+              isAuthenticated={isAuthenticated}
               allowedRoles={["admin", "event_coordinator"]}
-              userRole={user.role}
+              userRole={user?.role}
             >
               <CategoriesPage />
             </ProtectedRoute>
@@ -61,8 +63,9 @@ function App() {
           path="/event-management"
           element={
             <ProtectedRoute
+              isAuthenticated={isAuthenticated}
               allowedRoles={["admin", "event_coordinator"]}
-              userRole={user.role}
+              userRole={user?.role}
             >
               <EventManagement />
             </ProtectedRoute>
@@ -71,17 +74,51 @@ function App() {
         <Route
           path="/category-management"
           element={
-            <ProtectedRoute allowedRoles={["admin"]} userRole={user.role}>
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              allowedRoles={["admin"]}
+              userRole={user?.role}
+            >
               <CategoryManagement />
             </ProtectedRoute>
           }
         />
-        <Route path="/profile/:userId" element={<UserProfile />} />
+        <Route
+          path="/profile/:userId"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              allowedRoles={["admin", "event_coordinator", "registered_user"]}
+              userRole={user?.role}
+            >
+              <UserProfile />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/register/:id"
-          element={<EventRegistration userId={user.id} />}
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              allowedRoles={["admin", "event_coordinator", "registered_user"]}
+              userRole={user?.role}
+            >
+              <EventRegistration userId={user?.id} />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/profile" element={<MyProfile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              allowedRoles={["admin", "event_coordinator", "registered_user"]}
+              userRole={user?.role}
+            >
+              <MyProfile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />

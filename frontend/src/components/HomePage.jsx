@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./../styles/HomePage.css";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 function HomePage() {
   const navigate = useNavigate();
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("Guest");
+  const { user } = useContext(UserContext); // Access user context
   const [events, setEvents] = useState([]);
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState("event_date");
@@ -13,17 +13,6 @@ function HomePage() {
   const [titleFilter, setTitleFilter] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
-
-  // Load user data from sessionStorage on component mount
-  useEffect(() => {
-    const storedUserId = sessionStorage.getItem("userId");
-    const storedUserName = sessionStorage.getItem("userName");
-
-    if (storedUserId) {
-      setUserId(storedUserId);
-      setUserName(storedUserName || "Guest");
-    }
-  }, []);
 
   // Fetch events
   useEffect(() => {
@@ -53,7 +42,7 @@ function HomePage() {
 
   // Handle registration
   const handleRegisterClick = (eventId) => {
-    if (!userId) {
+    if (!user?.id) {
       alert("You need to log in to register for an event.");
       return;
     }
@@ -66,7 +55,7 @@ function HomePage() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ userId, eventId }),
+        body: JSON.stringify({ userId: user.id, eventId }),
       }
     )
       .then((response) => response.json())
@@ -92,10 +81,7 @@ function HomePage() {
     <div className="home-page">
       <main className="content">
         <section className="welcome">
-          <h2>
-            {userName} (ID: {userId || "Not logged in"})
-          </h2>
-          <h2>Welcome to Prairie Circle CMS</h2>
+          <h2>Welcome to Prairie Circle</h2>
           <p>
             Explore our community-driven platform designed for events, user
             management, and interactive dashboards.

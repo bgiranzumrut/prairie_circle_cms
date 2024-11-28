@@ -41,22 +41,13 @@ body {
   }
 }
 
-/* Filter and Sort Events Section */
-.filter-sort-events {
-  display: flex;
-  justify-content: center; /* Center aligns the filters */
-  margin: 20px auto; /* Adds spacing above and below */
-  background-color: #f6f1e8; /* Matches the welcome section */
-  padding: 10px;
-  width: 100;
-}
-
 /* Filters Container */
 .filters {
   display: flex;
   flex-wrap: wrap; /* Allows elements to wrap on smaller screens */
   gap: 15px 50px; /* Space between input fields */
   justify-content: center; /* Ensures child elements are centered */
+  margin: 2rem;
 }
 
 /* Filter Input and Select */

@@ -23,8 +23,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Include necessary files and authenticate
 include '../db/db.php';
-// include '../authentication/middleware.php';
-// authenticate(['admin', 'registered_user']);
+
 
 // Fetch users
 try {

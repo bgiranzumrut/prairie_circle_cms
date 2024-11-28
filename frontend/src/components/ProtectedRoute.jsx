@@ -1,15 +1,20 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 
-function ProtectedRoute({ children, allowedRoles, userRole }) {
-  if (!userRole) {
-    // Redirect to SignIn if not logged in
-    return <Navigate to="/signin" replace />;
+function ProtectedRoute({ children, isAuthenticated, allowedRoles, userRole }) {
+  console.log("isAuthenticated:", isAuthenticated);
+  console.log("userRole:", userRole);
+
+  if (!isAuthenticated) {
+    console.log("Redirecting to SignIn");
+    return <Navigate to="/SignIn" />;
   }
+
   if (!allowedRoles.includes(userRole)) {
-    // Redirect to Home if unauthorized
-    return <Navigate to="/" replace />;
+    console.log("User role not allowed. Redirecting to Home");
+    return <Navigate to="/SignIn" />;
   }
+
   return children;
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./../styles/CategoryManagement.css";
 
 function CategoryManagement() {
   const [categories, setCategories] = useState([]); // List of categories
@@ -72,7 +73,7 @@ function CategoryManagement() {
   };
 
   return (
-    <div>
+    <div className="category-management">
       <h1>Category Management</h1>
 
       {/* Feedback Message */}

@@ -1,0 +1,163 @@
+/* General Container */
+.event-management {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+  color: #333;
+}
+
+/* Page Title */
+.event-management h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #3b5e56;
+  margin-bottom: 30px;
+}
+
+/* Feedback Message */
+.event-management p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #3b5e56;
+  margin-bottom: 20px;
+}
+
+/* Form Section */
+.event-management form {
+  margin-bottom: 40px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.event-management form h2 {
+  font-size: 1.5rem;
+  color: #3b5e56;
+  margin-bottom: 20px;
+}
+
+.event-management form label {
+  display: block;
+  font-weight: bold;
+  color: #3b5e56;
+  margin-bottom: 5px;
+}
+
+.event-management form input,
+.event-management form select,
+.event-management form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.event-management form button {
+  background-color: #3b5e56;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.event-management form button:hover {
+  background-color: #4a6a63;
+}
+
+/* Events Table */
+.event-management table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.event-management table th,
+.event-management table td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.event-management table th {
+  background-color: #f8f9fa;
+  color: #3b5e56;
+  font-weight: bold;
+}
+
+.event-management table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.event-management table img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* Action Buttons */
+.event-management table button {
+  background-color: #3b5e56;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.event-management table button {
+  margin: 1em;
+  width: 80%;
+}
+.event-management table button:hover {
+  background-color: #4a6a63;
+}
+
+.event-management table button:last-child {
+  background-color: #d9534f; /* Delete button color */
+}
+
+.event-management table button:last-child:hover {
+  background-color: #c9302c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .event-management {
+    padding: 15px;
+  }
+
+  .event-management table th,
+  .event-management table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .event-management form input,
+  .event-management form select,
+  .event-management form textarea {
+    font-size: 0.9rem;
+  }
+
+  .event-management form button,
+  .event-management table button {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}

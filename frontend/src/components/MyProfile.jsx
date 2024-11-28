@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./../styles/MyProfile.css";
 
 function MyProfile() {
   const [user, setUser] = useState(null);
@@ -26,7 +27,6 @@ function MyProfile() {
           setError(data.error || "Failed to fetch profile.");
         }
       } catch (err) {
-        console.error("Error fetching profile:", err);
         setError("An error occurred while fetching your profile.");
       } finally {
         setLoading(false);
@@ -42,13 +42,12 @@ function MyProfile() {
         "http://localhost/prairie_circle_cms/backend/events/cancel_registration.php",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // Include session credentials
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ eventId }),
         }
       );
+
       const data = await response.json();
 
       if (response.ok) {
@@ -60,13 +59,12 @@ function MyProfile() {
         alert(data.error || "Failed to cancel registration.");
       }
     } catch (err) {
-      console.error("Error canceling registration:", err);
       alert("An error occurred. Please try again.");
     }
   };
 
   return (
-    <div>
+    <div className="my-profile">
       <h2>My Profile</h2>
       {loading ? (
         <p>Loading profile...</p>
@@ -74,14 +72,16 @@ function MyProfile() {
         <p className="error-message">{error}</p>
       ) : (
         user && (
-          <div>
-            <p>
-              <strong>Name:</strong> {user.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {user.email}
-            </p>
-            <h3>Registered Events</h3>
+          <>
+            <div className="user-info">
+              <p>
+                <strong>Name:</strong> {user.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+            </div>
+            <h3>My Events</h3>
             {events.length > 0 ? (
               <ul>
                 {events.map((event) => (
@@ -98,9 +98,9 @@ function MyProfile() {
                 ))}
               </ul>
             ) : (
-              <p>No events registered yet.</p>
+              <p className="no-events">No events registered yet.</p>
             )}
-          </div>
+          </>
         )
       )}
     </div>

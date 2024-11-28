@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
+import "./../styles/EventManagement.css";
 
 function EventManagement() {
-  const [events, setEvents] = useState([]); // Event list
+  const [events, setEvents] = useState([]);
   const [formData, setFormData] = useState({
     id: null,
     title: "",
     description: "",
     category_id: "",
     event_date: "",
-    image: null, // Image file
-  }); // Form data
-  const [categories, setCategories] = useState([]); // Categories list
-  const [message, setMessage] = useState(""); // Feedback message
+    image: null,
+  });
+  const [categories, setCategories] = useState([]);
+  const [message, setMessage] = useState("");
 
-  // Fetch events and categories on component mount
   useEffect(() => {
     fetchEvents();
     fetchCategories();
@@ -54,21 +54,14 @@ function EventManagement() {
     formDataObj.append("description", formData.description);
     formDataObj.append("category_id", formData.category_id);
     formDataObj.append("event_date", formData.event_date);
-    if (formData.image) {
-      formDataObj.append("image", formData.image); // Add image file
-    }
-    if (formData.id) {
-      formDataObj.append("id", formData.id);
-    }
+    if (formData.image) formDataObj.append("image", formData.image);
+    if (formData.id) formDataObj.append("id", formData.id);
 
-    fetch(apiUrl, {
-      method: "POST",
-      body: formDataObj,
-    })
+    fetch(apiUrl, { method: "POST", body: formDataObj })
       .then((response) => response.json())
       .then((data) => {
         setMessage(data.message || "Operation successful!");
-        fetchEvents(); // Refresh events list
+        fetchEvents();
         setFormData({
           id: null,
           title: "",
@@ -88,7 +81,7 @@ function EventManagement() {
       description: event.description,
       category_id: event.category_id,
       event_date: event.event_date,
-      image: null, // Image editing requires re-upload
+      image: null,
     });
   };
 
@@ -103,81 +96,62 @@ function EventManagement() {
       .then((response) => response.json())
       .then((data) => {
         setMessage(data.message || "Event deleted successfully!");
-        fetchEvents(); // Refresh events list
+        fetchEvents();
       })
       .catch((err) => console.error("Error deleting event:", err));
   };
 
   return (
-    <div>
+    <div className="event-management">
       <h1>Event Management</h1>
-
-      {/* Feedback Message */}
       {message && <p>{message}</p>}
 
-      {/* Form for Creating/Editing Events */}
       <form onSubmit={handleSubmit}>
         <h2>{formData.id ? "Edit Event" : "Create Event"}</h2>
-        <label>
-          Title:
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Description:
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            required
-          ></textarea>
-        </label>
-        <label>
-          Category:
-          <select
-            name="category_id"
-            value={formData.category_id}
-            onChange={handleInputChange}
-            required
-          >
-            <option value="">Select a Category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Event Date:
-          <input
-            type="date"
-            name="event_date"
-            value={formData.event_date}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Image:
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-        </label>
+        <label>Title:</label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleInputChange}
+          required
+        />
+        <label>Description:</label>
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleInputChange}
+          required
+        ></textarea>
+        <label>Category:</label>
+        <select
+          name="category_id"
+          value={formData.category_id}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="">Select a Category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <label>Event Date:</label>
+        <input
+          type="date"
+          name="event_date"
+          value={formData.event_date}
+          onChange={handleInputChange}
+          required
+        />
+        <label>Image:</label>
+        <input type="file" name="image" onChange={handleFileChange} />
         <button type="submit">
           {formData.id ? "Update Event" : "Create Event"}
         </button>
       </form>
 
-      {/* Events List */}
       <h2>Events List</h2>
       <table>
         <thead>
@@ -205,7 +179,6 @@ function EventManagement() {
                   <img
                     src={`http://localhost/prairie_circle_cms/backend/${event.image_path}`}
                     alt={event.title}
-                    style={{ width: "100px", height: "auto" }}
                   />
                 )}
               </td>

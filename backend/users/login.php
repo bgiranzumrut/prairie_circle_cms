@@ -24,9 +24,15 @@ include '../db/db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
 
+    // Validate input
     if (!isset($data['email'], $data['password'])) {
         http_response_code(400);
         echo json_encode(['error' => 'Email and password are required.']);
+        exit();
+    }
+    if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid email format.']);
         exit();
     }
 
@@ -45,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_role'] = $user['role'];
-            
+
+            // Respond with user details
             http_response_code(200);
             echo json_encode([
                 'message' => 'Login successful!',
@@ -54,10 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'role' => $user['role'],
             ]);
         } else {
+            // Log failed login attempt
+            error_log("Failed login attempt for email: " . $data['email']);
+            
             http_response_code(401); // Unauthorized
             echo json_encode(['error' => 'Invalid email or password.']);
         }
     } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage()); // Log database error
         http_response_code(500); // Internal Server Error
         echo json_encode(['error' => 'An error occurred while processing your request.']);
     }
