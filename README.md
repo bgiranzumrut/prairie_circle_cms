@@ -91,6 +91,8 @@ cd prairie-circle
 npm install
 npm run dev
 
+```
+
 ### Access the application at http://localhost:5173.
 
 ## Contribution Guidelines
