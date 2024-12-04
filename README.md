@@ -5,16 +5,17 @@ The Prairie Circle Platform CMS is a dynamic web-based content management system
 
 ## Table of Contents
 
-1-Project Purpose
-2-Key Features
-3-Technologies Used
-4-Database Design
-5-User Roles
-6-Installation and Setup
-7-Contribution Guidelines
-8-Future Enhancements
-9- License
-10-Acknowledgments
+1. [Project Purpose](#project-purpose)
+2. [Key Features](#key-features)
+3. [Technologies Used](#technologies-used)
+4. [Database Design](#database-design)
+5. [User Roles](#user-roles)
+6. [Installation and Setup](#installation-and-setup)
+7. [Contribution Guidelines](#contribution-guidelines)
+8. [Future Enhancements](#future-enhancements)
+9. [License](#license)
+10. [Acknowledgments](#acknowledgments)
+
 
 ## Project Purpose
 
@@ -86,24 +87,16 @@ View event information without profile features.
 
 ### Clone the repository:
 
+```bash
 git clone https://github.com/bgiranzumrut/prairie_circle_cms.git
 
-### Navigate to the project directory:
+```markdown
+# Installation Steps:
 
+```bash
+git clone https://github.com/bgiranzumrut/prairie_circle_cms.git
 cd prairie-circle
-
-### Install dependencies:
-
 npm install
-
-###  Configure the database:
-
-Import the provided SQL script (serverside.sql) into your MySQL server.
-
-Update database credentials in the configuration file (config.php).
-
-### Run the development server:
-
 npm run dev
 
 ### Access the application at http://localhost:5173.
