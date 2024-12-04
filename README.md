@@ -22,91 +22,91 @@ This CMS is tailored for Prairie Circle, a Winnipeg-based non-profit organizatio
 
 
 ## Key Features
-# Event Management: 
+### Event Management: 
 Create, update, categorize, and delete events.
 
-# User Authentication:
+### User Authentication:
  Secure login system with role-based access control (Admin, Event Coordinator, Registered User, Public User).
 
-# Event Registration: Users can join events, track participation, and view attendee lists.
+###  Event Registration: Users can join events, track participation, and view attendee lists.
 User Profiles: Track participation history and discover other attendees.
 
-# Category-Based Browsing: 
+### Category-Based Browsing: 
 Events are organized into categories for easy filtering.
 
-#Interactive Dashboard: 
+### Interactive Dashboard: 
 Personalized user dashboard with upcoming events.
 
 ## Technologies Used
 
-# React + Vite: 
+###  React + Vite: 
 Combined for a fast, modern development experience.
 
-# PHP: 
+###  PHP: 
 Server-side logic and database interaction.
 
-# MySQL: 
+###  MySQL: 
 Backend database for managing event and user data.
 
-#HTML/CSS/JavaScript:
+### HTML/CSS/JavaScript:
  Core web technologies for structure, styling, and interactivity.
 ##  Database Design
 
 The database structure supports efficient event and user management:
 
-# Users Table:
+###  Users Table:
  Stores user details and roles.
 
-# Events Table: 
+###  Events Table: 
 Manages event data (title, date, location, etc.).
 
-# Categories Table: 
+###  Categories Table: 
 Organizes events into logical groups.
 
-# Registrations Table: 
+###  Registrations Table: 
 Tracks user-event relationships for participation.
 
-## Key Relationships
+###  Key Relationships
 One-to-Many: Categories to Events.
 
 ## User Roles
 
-# Administrators:
+###  Administrators:
 Full access to the CMS, including managing users and categories.
 
-# Event Coordinators:
+###  Event Coordinators:
 Limited administrative privileges, focusing on event management.
 
-# Registered Users:
+###  Registered Users:
 Browse, join events, and manage personal participation.
 
-# Public Users:
+###  Public Users:
 View event information without profile features.
 ## Installation and Setup
 
-# Clone the repository:
+### Clone the repository:
 
 git clone https://github.com/bgiranzumrut/prairie_circle_cms.git
 
-# Navigate to the project directory:
+### Navigate to the project directory:
 
 cd prairie-circle
 
-# Install dependencies:
+### Install dependencies:
 
 npm install
 
-#  Configure the database:
+###  Configure the database:
 
 Import the provided SQL script (serverside.sql) into your MySQL server.
 
 Update database credentials in the configuration file (config.php).
 
-# Run the development server:
+### Run the development server:
 
 npm run dev
 
-# Access the application at http://localhost:5173.
+### Access the application at http://localhost:5173.
 
 ## Contribution Guidelines
 
