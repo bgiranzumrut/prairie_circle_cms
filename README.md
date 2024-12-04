@@ -85,14 +85,6 @@ Browse, join events, and manage personal participation.
 View event information without profile features.
 ## Installation and Setup
 
-### Clone the repository:
-
-```bash
-git clone https://github.com/bgiranzumrut/prairie_circle_cms.git
-
-```markdown
-# Installation Steps:
-
 ```bash
 git clone https://github.com/bgiranzumrut/prairie_circle_cms.git
 cd prairie-circle
