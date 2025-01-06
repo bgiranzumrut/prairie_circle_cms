@@ -100,6 +100,7 @@ function HomePage() {
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className="filter-select"
+              aria-label="Filter by Status"
             >
               <option value="">All Statuses</option>
               <option value="upcoming">Upcoming</option>
@@ -110,6 +111,7 @@ function HomePage() {
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="filter-select"
+              aria-label="Filter by Category"
             >
               <option value="">All Categories</option>
               {categories.map((category) => (
@@ -122,6 +124,7 @@ function HomePage() {
               value={order}
               onChange={(e) => setOrder(e.target.value)}
               className="filter-select"
+              aria-label="Sort Order"
             >
               <option value="ASC">Dates closest to now</option>
               <option value="DESC">Dates farthest from now</option>

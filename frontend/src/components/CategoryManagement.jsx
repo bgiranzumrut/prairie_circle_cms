@@ -82,9 +82,10 @@ function CategoryManagement() {
       {/* Form for Creating/Editing Categories */}
       <form onSubmit={handleSubmit}>
         <h2>{formData.id ? "Edit Category" : "Create Category"}</h2>
-        <label>
+        <label for="">
           Name:
           <input
+            id="name"
             type="text"
             name="name"
             value={formData.name}
@@ -92,9 +93,10 @@ function CategoryManagement() {
             required
           />
         </label>
-        <label>
+        <label for="description">
           Description:
           <textarea
+            id="description"
             name="description"
             value={formData.description}
             onChange={handleInputChange}

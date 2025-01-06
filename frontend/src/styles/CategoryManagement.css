@@ -118,7 +118,7 @@
 }
 
 .category-management table button:last-child {
-  background-color: #d9534f; /* Delete button color */
+  background-color: #c5302b; /* Delete button color */
 }
 
 .category-management table button:last-child:hover {

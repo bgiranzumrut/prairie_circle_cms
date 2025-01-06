@@ -120,12 +120,12 @@ body {
   padding: 5px 10px;
   border-radius: 4px;
   font-weight: bold;
-  color: #fff;
+  color: #f1f1f1;
   display: inline-block;
 }
 
 .status-tag.upcoming {
-  background: #4caf50; /* Green */
+  background: #377637; /* Green */
 }
 
 .status-tag.ongoing {

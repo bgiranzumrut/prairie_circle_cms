@@ -20,7 +20,7 @@ function EventsPage() {
   useEffect(() => {
     // Fetch event details by ID
     fetch(
-      `http://localhost/prairie_circle_cms/backend/events/read.php?id=${id}`
+      `http://localhost/prairie_circle_cms/backend/events/read.php?event_id=${id}`
     )
       .then((response) => {
         if (!response.ok) {
@@ -29,17 +29,20 @@ function EventsPage() {
         return response.json();
       })
       .then((data) => {
-        if (data && data.length > 0) {
-          setEvent(data[0]); // Set event if data exists (assuming API returns an array)
+        if (data && data.id) {
+          setEvent(data);
         } else {
           setError("Event not found"); // Handle no matching event
         }
         setLoading(false);
       })
-      .catch((error) => {
-        setError(error.message || "Failed to fetch event details"); // Handle fetch error
-        setLoading(false);
-      });
+      .catch(
+        (error) => {
+          setError(error.message || "Failed to fetch event details"); // Handle fetch error
+          setLoading(false);
+        },
+        [id]
+      );
 
     // Fetch comments for the event
     fetchComments();

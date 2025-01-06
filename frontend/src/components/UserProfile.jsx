@@ -8,7 +8,7 @@ function UserProfile() {
   const [userEvents, setUserEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const [userEmail, setUserEmail] = useState("");
   useEffect(() => {
     // Fetch the user's details (name and events)
     const fetchUserDetails = async () => {
@@ -20,6 +20,8 @@ function UserProfile() {
 
         if (response.ok) {
           setUserName(data.userName || `User ${userId}`);
+          setUserEmail(data.userEmail || `No email provided`);
+
           setUserEvents(data.events || []);
         } else {
           setError(data.error || "Failed to fetch user details.");
@@ -48,7 +50,7 @@ function UserProfile() {
           <strong>Name:</strong> {userName}
         </p>
         <p>
-          <strong>Email:</strong> alice@example.com
+          <strong>Email:</strong> {userEmail}
         </p>
       </div>
 

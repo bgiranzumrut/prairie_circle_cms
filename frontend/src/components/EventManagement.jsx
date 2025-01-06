@@ -108,23 +108,26 @@ function EventManagement() {
 
       <form onSubmit={handleSubmit}>
         <h2>{formData.id ? "Edit Event" : "Create Event"}</h2>
-        <label>Title:</label>
+        <label for="title">Title:</label>
         <input
+          id="title"
           type="text"
           name="title"
           value={formData.title}
           onChange={handleInputChange}
           required
         />
-        <label>Description:</label>
+        <label for="description">Description:</label>
         <textarea
+          id="description"
           name="description"
           value={formData.description}
           onChange={handleInputChange}
           required
         ></textarea>
-        <label>Category:</label>
+        <label for="title">Category:</label>
         <select
+          id="title"
           name="category_id"
           value={formData.category_id}
           onChange={handleInputChange}
@@ -137,16 +140,22 @@ function EventManagement() {
             </option>
           ))}
         </select>
-        <label>Event Date:</label>
+        <label for="event">Event Date:</label>
         <input
+          id="event"
           type="date"
           name="event_date"
           value={formData.event_date}
           onChange={handleInputChange}
           required
         />
-        <label>Image:</label>
-        <input type="file" name="image" onChange={handleFileChange} />
+        <label for="image">Image:</label>
+        <input
+          id="image"
+          type="file"
+          name="image"
+          onChange={handleFileChange}
+        />
         <button type="submit">
           {formData.id ? "Update Event" : "Create Event"}
         </button>

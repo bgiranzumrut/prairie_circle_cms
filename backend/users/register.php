@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:5173"); // Allow requests from the frontend
+header("Access-Control-Allow-Origin: http://localhost:5173"); //  only requests from http://localhost:5173 are allowed. 
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Sanitize inputs
+    // XSS attacks.
     $name = htmlspecialchars(strip_tags(trim($data['name'])));
     $email = filter_var(trim($data['email']), FILTER_VALIDATE_EMAIL);
     $password = trim($data['password']);
@@ -46,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $role = 'registered_user';
 
         // Insert user into the database
+        //Using PDO with prepared statements mitigates SQL injection risks.
         $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
         $stmt = $pdo->prepare($query);
         $stmt->execute([
